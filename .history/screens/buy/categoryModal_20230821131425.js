@@ -1,0 +1,102 @@
+import { List, Divider } from 'react-native-paper';
+import { Entypo } from '@expo/vector-icons';
+import axios from 'axios';
+
+import React, { useEffect } from 'react';
+import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
+import SafeAreaContainer from '../../components/safeAreaContainer';
+import { Colors } from '../../constants/colors';
+import { useNavigation } from '@react-navigation/native';
+import { getImageUrl } from '../../utils/getImageUrl';
+import Modal from './modal';
+
+
+const CategoryModal = ({ visible, onDismiss }) => {
+
+    const [categories, setCategories] = React.useState([])
+
+    const navigation = useNavigation()
+
+    const handlePress = (item) => {
+        // navigation.navigate(item.subcategories.length > 0 ? 'SelectSubCategory' : 'AddProduct', {
+        //     title: item.name,
+        //     expert: route?.params?.expert ? true : false,
+        //     category: {
+        //         id: item._id,
+        //         name: item.name,
+        //         image: item.image
+        //     },
+        //     subcategory: "",
+        //     furthercategory: ""
+
+        // })
+    };
+
+    const renderCategoryItem = ({ item }) => (
+        <>
+            {/* display chevron right only if item subcategory length is grater than 1 */}
+            <List.Item
+                title={item.name}
+                left={() => <Image source={{ uri: getImageUrl(item.image) }} style={styles.logo} />}
+                onPress={() => handlePress(item)}
+                right={(props) => item.subcategories.length > 0 ? <List.Icon {...props} icon="chevron-right" /> : null}
+            />
+            <Divider />
+        </>
+    );
+
+    useEffect(() => {
+        // setLoading(true)
+        const getData = async () => {
+            await axios.get('category')
+                .then(res => {
+                    setCategories(res.data.categories)
+                })
+                .catch(err => console.log(err))
+            // .finally(() => setLoading(false))
+
+        }
+
+        getData()
+    }, [])
+    return (
+        <Modal
+            visible={visible}
+            onDismiss={() => onDismiss()}
+            title={'Add Product'}
+        >
+            <FlatList
+                data={categories}
+                renderItem={renderCategoryItem}
+                keyExtractor={(item) => item.id}
+            />
+        </Modal>
+    );
+};
+
+const styles = StyleSheet.create({
+    title: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 5,
+        marginLeft: 10,
+        color: Colors.primary,
+    },
+    subTitle: {
+        fontSize: 16,
+        marginBottom: 10,
+        marginLeft: 10,
+        color: Colors.grey,
+    },
+    logo: {
+        width: 50,
+        height: 50,
+        resizeMode: 'contain',
+        marginRight: 10,
+        borderRadius: 50,
+        marginLeft: 10
+    },
+});
+
+export default CategoryModal;

@@ -1,0 +1,62 @@
+import React from 'react';
+import { StyleSheet, View, Text, Image, FlatList, TouchableOpacity } from 'react-native';
+import { getImageUrl } from '../utils/getImageUrl';
+
+const CategoryList = ({
+    categories = [],
+    onPress = () => { },
+}) => {
+
+    const renderCategoryItem = ({ item }) => {
+        return (
+            <TouchableOpacity
+                onPress={() => onPress(item)}
+                style={styles.categoryItem}>
+                <Image source={{
+                    uri: getImageUrl(item.image)
+                }} style={styles.categoryImage} />
+                <Text style={styles.categoryName}>{item.name.substr(0, 8)}{item.name.length > 8 && '...'}</Text>
+            </TouchableOpacity>
+        );
+    };
+
+    return (
+        <View style={styles.container}>
+            <FlatList
+                data={categories}
+                keyExtractor={(item) => item._id}
+                renderItem={renderCategoryItem}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+            />
+        </View>
+    );
+};
+
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: '#fff',
+        padding: 10,
+        paddingTop: 0,
+    },
+    categoryItem: {
+        alignItems: 'center',
+        marginRight: 20,
+    },
+    categoryImage: {
+        width: 50,
+        height: 50,
+        borderRadius: 50,
+        marginBottom: 5,
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 100,
+    },
+    categoryName: {
+        fontSize: 14,
+        color: '#333',
+        textAlign: 'center',
+    },
+});
+
+export default CategoryList

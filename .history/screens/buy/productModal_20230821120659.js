@@ -1,0 +1,89 @@
+import { AntDesign } from '@expo/vector-icons';
+import { Button } from 'react-native-paper';
+import { Ionicons } from '@expo/vector-icons';
+
+import React, { useEffect, useState } from 'react'
+import { StyleSheet, Text, Modal, TouchableOpacity, View, Animated, Image } from 'react-native'
+import Header from '../../components/header';
+import { Colors } from '../../constants/colors';
+import { getAvatar } from '../../utils/getAvatar';
+import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
+import { getImageUrl } from '../../utils/getImageUrl';
+import { formatCurrencyPKR } from '../../utils/currencyFormatter';
+
+export default function ProductModal({
+    visible,
+    onDismiss,
+    user
+}) {
+
+    const scrollY = React.useRef(new Animated.Value(0)).current;
+    const navigation = useNavigation()
+    const [profile, setProfile] = useState({})
+    const [products, setProducts] = useState([])
+
+
+    return (
+        <Modal
+            visible={visible}
+            onDismiss={() => onDismiss()}
+            animationType='slide'
+        >
+            <View style={{
+                paddingTop: 50,
+            }}
+            >
+
+            </View>
+        </Modal>
+    )
+}
+
+const RenderProductItem = ({ item, onPress, deleteProduct, editProduct }) => {
+    console.log(item)
+
+    const [visible, setVisible] = React.useState(false);
+
+    return (
+        <TouchableOpacity style={styles.itemContainer}
+            onPress={onPress}
+        >
+            <View style={{ position: 'relative' }}>
+                <Image source={{ uri: getImageUrl(item.images[0]) }} style={styles.itemImage} />
+                {/* <MaterialCommunityIcons name="heart-outline" size={24} color="red" style={styles.heartIcon} /> */}
+                <View
+                    style={styles.lightDark}
+                />
+            </View>
+            <View style={styles.itemDetails}>
+                <Text style={styles.itemName}>{item.title}</Text>
+                <Text style={styles.itemPrice}>{formatCurrencyPKR(item.price)}</Text>
+                <Text style={styles.itemPrice}>{item.description.substr(0, 80)}</Text>
+            </View>
+        </TouchableOpacity>
+    )
+};
+
+const styles = StyleSheet.create({
+    container: {
+        padding: 10
+    },
+    infoContainer: {
+        marginTop: 10,
+        alignItems: 'center',
+        paddingHorizontal: 10,
+        textAlign: 'center'
+    },
+    avatar: {
+        width: 120,
+        height: 120,
+        borderRadius: 60,
+        alignSelf: 'center',
+    },
+    heading: {
+        fontSize: 20,
+        fontFamily: 'Circular',
+        color: Colors.main
+    },
+})

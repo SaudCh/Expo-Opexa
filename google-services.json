@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "569174886398",
+    "project_id": "opxa-91294",
+    "storage_bucket": "opxa-91294.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:569174886398:android:acbb7b2dea1114bd3d62af",
+        "android_client_info": {
+          "package_name": "com.opxa.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "569174886398-bqeudnk90ikae988r6iol1g807n9mr6d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOQLBnfY-SUncocIJWyPfRXM3eTEklaKE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "569174886398-bqeudnk90ikae988r6iol1g807n9mr6d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
